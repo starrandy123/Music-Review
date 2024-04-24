@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Home Page</title>
+    <style>
+        .track-listing {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .column {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .column:last-child {
+            margin-right: 0;
+        }
+        .column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .column li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .column img {
+            width: 100px;
+            height: auto;
+        }
+        .button {
+            padding: 5px 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .average-rating {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 123, 255, 0.7);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 0.8em;
+        }
+        .sort-menu {
+            margin-bottom: 20px;
+            align-self: flex-start;
+        }
+        label, select {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Music Review</h1>
+        <nav>
+            <ul>
+                {% if is_logged_in %}
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('reviews_page') }}">Reviews</a></li>
+                    <li><a href="{{ url_for('artistpage') }}">Artist</a></li>
+                    <li><a href="{{ url_for('user_page') }}">User Page</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    <li class="username-display">Hi, {{ username }}</li>
+                {% else %}
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="track-listing">
+            <div class="sort-menu">
+                <label for="sort_by">Rank by:</label>
+                <select id="sort_by" onchange="window.location.href='/?sort_by=' + this.value">
+                    <option value="top_rated">Top Rated</option>
+                    <option value="genre">Genre</option>
+                    <option value="alphabetical">Alphabetical</option>
+                    <option value="top_50">Top 50 Tracks</option>
+                </select>
+            </div>
+            <div class="column">
+                <h2>Spotify Top 50</h2>
+                <ul>
+                    {% for track in spotify_tracks %}
+                    <li>
+                        <img src="{{ track.image_url }}" alt="Album cover">
+                        <strong>{{ track.name }}</strong>&nbsp;by {{ track.artist }}
+                        <a href="{{ url_for('set_current_track', track_type='spotify', track_id=track.spotify_id) }}" class="button">Review</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="column">
+                <h2>Artist Created Tracks</h2>
+                <ul>
+                    {% for track in artist_tracks %}
+                    <li>
+                        <strong>{{ track.name }}</strong>&nbsp;by {{ track.artist }}
+                        <div class="average-rating">Avg Rating: {{ track.average_rating | round(2) }}</div>
+                        <a href="{{ url_for('download', filename=track.file_path) }}">Download</a>
+                        <a href="{{ url_for('set_current_track', track_type='artist', track_id=track.id) }}" class="button">Review</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>© 2024 Music Review Website</p>
+    </footer>
+</body>
+</html>
+

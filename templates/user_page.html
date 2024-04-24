@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>User Page</title>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 20px; /* Adds 20px spacing between each review */
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>User Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/artistpage">Artist</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Your Reviews</h2>
+        {% if user_reviews %}
+        <ul>
+            {% for review in user_reviews %}
+            <li>
+                <strong>Track:</strong> {{ review.track_name }}<br>
+                <strong>Rating:</strong> {{ review.rating }}<br>
+                <strong>Review:</strong> {{ review.content }}<br>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No reviews yet.</p>
+        {% endif %}
+    </main>
+    <footer>
+        <p>© 2024 Music Review Website</p>
+    </footer>
+</body>
+</html>
+

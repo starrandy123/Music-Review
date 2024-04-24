@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Reviews Page</title>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 20px; /* Spacing between each review */
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Reviews</h1>
+        <nav>
+            <ul>
+                {% if is_logged_in %}
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('artistpage') }}">Artist</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+		    <li><a href="{{ url_for('artistpage') }}">Artist</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>All Reviews</h2>
+        <ul>
+            {% for review in reviews %}
+            <li>
+                <strong>Track:</strong> {{ review.track_name }} by {{ review.artist }}<br>
+                <strong>Reviewed by:</strong> {{ review.username }}<br>
+                <strong>Rating:</strong> {{ review.rating }}<br>
+                <strong>Average Rating:</strong> {{ review.average_rating | round(2) }}<br>
+                <strong>Content:</strong> {{ review.content }}
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
+    <footer>
+        <p>© 2024 Music Review Website</p>
+    </footer>
+</body>
+</html>
+

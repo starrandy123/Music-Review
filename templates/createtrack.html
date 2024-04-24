@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta viewport="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Add New Track</title>
+</head>
+<body>
+    <h1>Add New Track</h1>
+    <form method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Track Name" required>
+	<input type="text" name="artist" placeholder="Artist Name" required>
+        <input type="text" name="album" placeholder="Album Name">
+        <input type="text" name="genre" placeholder="Genre" required>
+        <input type="file" name="track_file" required>
+        <button type="submit">Add Track</button>
+    </form>
+</body>
+</html>
+

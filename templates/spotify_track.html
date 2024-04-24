@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Details</title>
+</head>
+<body>
+    <h1>Track Details</h1>
+    <div>
+        <p><strong>Name:</strong> {{ track.name }}</p>
+        <p><strong>Artist:</strong> {{ track.artists[0].name }}</p>
+        <p><strong>Album:</strong> {{ track.album.name }}</p>
+        <p><strong>Release Date:</strong> {{ track.album.release_date }}</p>
+        <p><strong>Duration:</strong> {{ track.duration_ms // 1000 }} seconds</p>
+        <p><strong>Preview URL:</strong> <a href="{{ track.preview_url }}">Listen to Preview</a></p>
+    </div>
+</body>
+</html>

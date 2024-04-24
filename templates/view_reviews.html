@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>View Reviews for {{ track.name }}</title>
+</head>
+<body>
+    <header>
+        <h1>Reviews for {{ track.name }}</h1>
+    </header>
+    <main>
+        {% for review in reviews %}
+        <div>
+            <p>Rating: {{ review.rating }}</p>
+            <p>Review: {{ review.content }}</p>
+        </div>
+        {% else %}
+        <p>No reviews yet.</p>
+        {% endfor %}
+    </main>
+</body>
+</html>
+
